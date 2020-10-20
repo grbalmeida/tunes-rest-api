@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DevIO.Api.Migrations
+namespace Tunes.Api.Migrations
 {
     public partial class Identity : Migration
     {

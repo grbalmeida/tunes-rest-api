@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
-using DevIO.Api.Extensions;
+using Tunes.Api.Configuration;
+using Tunes.Api.Extensions;
+using Tunes.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Tunes.Api.Configuration;
-using Tunes.Data.Context;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace Tunes.Api
 {
@@ -32,10 +33,12 @@ namespace Tunes.Api
 
             services.WebApiConfig();
 
+            services.AddSwaggerConfig();
+
             services.ResolveDependencies();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -53,6 +56,8 @@ namespace Tunes.Api
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseMvcConfiguration();
+
+            app.UseSwaggerConfig(provider);
         }
     }
 }

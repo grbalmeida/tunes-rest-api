@@ -4,7 +4,6 @@ using Tunes.Api.ViewModels;
 using Tunes.Business.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,9 +13,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevIO.Api.V1.Controllers
+namespace Tunes.Api.V1.Controllers
 {
-    [Route("api/account")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/conta")]
     public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -35,7 +35,7 @@ namespace DevIO.Api.V1.Controllers
         }
 
         //[EnableCors("Development")]
-        [HttpPost("new-account")]
+        [HttpPost("nova-conta")]
         public async Task<ActionResult> RegisterUser(RegisterUserViewModel registerUser)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);

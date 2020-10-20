@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DevIO.Api.Migrations
+namespace Tunes.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20200219012315_Identity")]

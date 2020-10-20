@@ -3,7 +3,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace DevIO.Api.Extensions
+namespace Tunes.Api.Extensions
 {
     public class ExceptionMiddleware
     {

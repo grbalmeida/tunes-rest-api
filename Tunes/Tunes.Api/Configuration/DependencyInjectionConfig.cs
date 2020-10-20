@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Tunes.Api.Extensions;
 using Tunes.Business.Interfaces;
 using Tunes.Data.Context;
 using Tunes.Data.Repository;
+using Tunes.Business.Notifications;
 
 namespace Tunes.Api.Configuration
 {
@@ -24,8 +27,12 @@ namespace Tunes.Api.Configuration
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<ITipoMidiaRepository, TipoMidiaRepository>();
 
+            services.AddScoped<INotifier, Notifier>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             return services;
         }
