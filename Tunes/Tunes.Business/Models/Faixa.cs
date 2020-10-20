@@ -2,7 +2,7 @@
 
 namespace Tunes.Business.Models
 {
-    public class Faixa
+    public class Faixa : Entity
     {
         public int FaixaId { get; set; }
         public string Nome { get; set; }

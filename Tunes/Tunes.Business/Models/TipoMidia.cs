@@ -2,7 +2,7 @@
 
 namespace Tunes.Business.Models
 {
-    public class TipoMidia
+    public class TipoMidia : Entity
     {
         public int TipoMidiaId { get; set; }
         public string Nome { get; set; }

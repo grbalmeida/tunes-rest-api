@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tunes.Business.Models
 {
-    public class Funcionario
+    public class Funcionario : Entity
     {
         public int FuncionarioId { get; set; }
         public string PrimeiroNome { get; set; }

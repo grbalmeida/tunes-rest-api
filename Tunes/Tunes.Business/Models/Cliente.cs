@@ -2,7 +2,7 @@
 
 namespace Tunes.Business.Models
 {
-    public class Cliente
+    public class Cliente : Entity
     {
         public int ClienteId { get; set; }
         public string PrimeiroNome { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Tunes.Business.Models
 {
-    public class ItemNotaFiscal
+    public class ItemNotaFiscal : Entity
     {
         public int ItemNotaFiscalId { get; set; }
         public decimal PrecoUnitario { get; set; }

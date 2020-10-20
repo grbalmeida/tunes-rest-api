@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tunes.Business.Models
 {
-    public class NotaFiscal
+    public class NotaFiscal : Entity
     {
         public int NotaFiscalId { get; set; }
         public DateTime DataNotaFiscal { get; set; }

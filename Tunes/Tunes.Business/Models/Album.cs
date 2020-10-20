@@ -2,7 +2,7 @@
 
 namespace Tunes.Business.Models
 {
-    public class Album
+    public class Album : Entity
     {
         public int AlbumId { get; set; }
         public string Titulo { get; set; }
