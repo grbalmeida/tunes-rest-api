@@ -17,13 +17,9 @@ namespace Tunes.Data.Context
         public DbSet<NotaFiscal> NotasFiscais { get; set; }
         public DbSet<ItemNotaFiscal> ItensNotaFiscal { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public TunesContext(DbContextOptions<TunesContext> options) : base(options)
         {
-            optionsBuilder
-                .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Tunes;Trusted_Connection=true;")
-                .UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
 
-            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
