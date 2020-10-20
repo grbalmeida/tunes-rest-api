@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Tunes.Api.Extensions;
 using Tunes.Business.Interfaces;
 using Tunes.Data.Context;
 using Tunes.Data.Repository;
@@ -24,6 +25,7 @@ namespace Tunes.Api.Configuration
             services.AddScoped<ITipoMidiaRepository, TipoMidiaRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUser, AspNetUser>();
 
             return services;
         }
