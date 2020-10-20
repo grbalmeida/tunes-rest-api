@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DevIO.Api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +26,8 @@ namespace Tunes.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddIdentityConfiguration(Configuration);
+
             services.AddAutoMapper(typeof(Startup));
 
             services.WebApiConfig();
@@ -45,6 +47,10 @@ namespace Tunes.Api
                 app.UseCors("Production");
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseMvcConfiguration();
         }
