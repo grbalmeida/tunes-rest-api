@@ -66,7 +66,7 @@ namespace Tunes.Api.V1.Controllers
         {
             if (id != artistaViewModel.ArtistaId)
             {
-                NotifyError("O id informado não é o mesmoque foi informado na query");
+                NotifyError("O id informado não é o mesmo que foi informado na query");
                 return CustomResponse(artistaViewModel);
             }
 
