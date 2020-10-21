@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tunes.Business.Models;
 
-namespace Tunes.Business.Interfaces
+namespace Tunes.Business.Interfaces.Repository
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity
     {

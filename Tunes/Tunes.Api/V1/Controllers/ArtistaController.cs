@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tunes.Api.Controllers;
 using Tunes.Api.ViewModels;
+using Tunes.Business.Interfaces.Repository;
 using Tunes.Business.Interfaces;
 using Tunes.Business.Models;
+using Tunes.Business.Interfaces.Services;
 
 namespace Tunes.Api.V1.Controllers
 {
@@ -16,14 +18,17 @@ namespace Tunes.Api.V1.Controllers
     public class ArtistaController : MainController
     {
         private readonly IArtistaRepository _artistaRepository;
+        private readonly IArtistaService _artistaService;
         private readonly IMapper _mapper;
 
         public ArtistaController(IArtistaRepository artistaRepository,
+                                 IArtistaService artistaService,
                                  IMapper mapper,
                                  INotifier notifier,
                                  IUser user) : base(notifier, user)
         {
             _artistaRepository = artistaRepository;
+            _artistaService = artistaService;
             _mapper = mapper;
         }
 
@@ -51,7 +56,7 @@ namespace Tunes.Api.V1.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _artistaRepository.Add(_mapper.Map<Artista>(artistaViewModel));
+            await _artistaService.Adicionar(_mapper.Map<Artista>(artistaViewModel));
 
             return CustomResponse(artistaViewModel);
         }
@@ -67,7 +72,7 @@ namespace Tunes.Api.V1.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _artistaRepository.Update(_mapper.Map<Artista>(artistaViewModel));
+            await _artistaService.Atualizar(_mapper.Map<Artista>(artistaViewModel));
 
             return CustomResponse(artistaViewModel);
         }
@@ -82,7 +87,7 @@ namespace Tunes.Api.V1.Controllers
                 return NotFound();
             }
 
-            await _artistaRepository.Remove(id);
+            await _artistaService.Remover(id);
 
             return CustomResponse(artistaViewModel);
         }

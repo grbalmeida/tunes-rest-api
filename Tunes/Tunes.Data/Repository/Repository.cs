@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Tunes.Business.Interfaces;
+using Tunes.Business.Interfaces.Repository;
 using Tunes.Business.Models;
 using Tunes.Data.Context;
 

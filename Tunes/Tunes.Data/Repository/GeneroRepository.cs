@@ -1,4 +1,4 @@
-﻿using Tunes.Business.Interfaces;
+﻿using Tunes.Business.Interfaces.Repository;
 using Tunes.Business.Models;
 using Tunes.Data.Context;
 
