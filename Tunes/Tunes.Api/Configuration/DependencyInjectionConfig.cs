@@ -37,6 +37,7 @@ namespace Tunes.Api.Configuration
             services.AddScoped<IFuncionarioService, FuncionarioService>();
             services.AddScoped<IAlbumService, AlbumService>();
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<INotaFiscalService, NotaFiscalService>();
 
             services.AddScoped<INotifier, Notifier>();
 
