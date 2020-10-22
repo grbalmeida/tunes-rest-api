@@ -35,6 +35,7 @@ namespace Tunes.Api.Configuration
             services.AddScoped<IGeneroService, GeneroService>();
             services.AddScoped<ITipoMidiaService, TipoMidiaService>();
             services.AddScoped<IPlaylistService, PlaylistService>();
+            services.AddScoped<IFuncionarioService, FuncionarioService>();
 
             services.AddScoped<INotifier, Notifier>();
 
