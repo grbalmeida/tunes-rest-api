@@ -27,7 +27,6 @@ namespace Tunes.Api.Configuration
             services.AddScoped<IGeneroRepository, GeneroRepository>();
             services.AddScoped<IItemNotaFiscalRepository, ItemNotaFiscalRepository>();
             services.AddScoped<INotaFiscalRepository, NotaFiscalRepository>();
-            services.AddScoped<IPlaylistFaixaRepository, PlaylistFaixaRepository>();
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<ITipoMidiaRepository, TipoMidiaRepository>();
 
