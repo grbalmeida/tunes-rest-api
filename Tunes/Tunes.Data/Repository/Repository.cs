@@ -21,34 +21,34 @@ namespace Tunes.Data.Repository
             DbSet = Db.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> Busca(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<IEnumerable<TEntity>> Busca(Expression<Func<TEntity, bool>> predicate)
         {
             return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
-        public async Task<TEntity> ObterPorId(int id)
+        public virtual async Task<TEntity> ObterPorId(int id)
         {
             return await DbSet.FindAsync(id);
         }
 
-        public async Task<List<TEntity>> ObterTodos()
+        public virtual async Task<List<TEntity>> ObterTodos()
         {
             return await DbSet.ToListAsync();
         }
 
-        public async Task Adicionar(TEntity entity)
+        public virtual async Task Adicionar(TEntity entity)
         {
             DbSet.Add(entity);
             await SalvarAlteracoes();
         }
 
-        public async Task Atualizar(TEntity entity)
+        public virtual async Task Atualizar(TEntity entity)
         {
             DbSet.Update(entity);
             await SalvarAlteracoes();
         }
 
-        public async Task Remover(int id)
+        public virtual async Task Remover(int id)
         {
             var entity = await DbSet.FindAsync(id);
 

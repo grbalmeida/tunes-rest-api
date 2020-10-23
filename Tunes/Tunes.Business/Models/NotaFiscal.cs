@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tunes.Business.Models
 {
@@ -12,7 +13,17 @@ namespace Tunes.Business.Models
         public string Estado { get; set; }
         public string Pais { get; set; }
         public string CEP { get; set; }
-        public decimal Total { get; set; }
+        public decimal Total
+        {
+            get
+            {
+                return ItensNotaFiscal.Sum(i => i.PrecoUnitario * i.Quantidade);
+            }
+            set
+            {
+            
+            }
+        }
 
         public Cliente Cliente { get; set; }
         public IList<ItemNotaFiscal> ItensNotaFiscal { get; set; }

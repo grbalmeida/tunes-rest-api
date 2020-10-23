@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Tunes.Api.ViewModels
 {
@@ -27,7 +28,17 @@ namespace Tunes.Api.ViewModels
         public string CEP { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public decimal Total { get; set; }
+        public decimal Total
+        {
+            get
+            {
+                return ItensNotaFiscal.Sum(i => i.PrecoUnitario * i.Quantidade);
+            }
+            set
+            {
+
+            }
+        }
 
         public ClienteViewModel Cliente { get; set; }
         public IList<ItemNotaFiscalViewModel> ItensNotaFiscal { get; set; }
