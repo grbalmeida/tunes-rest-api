@@ -35,13 +35,13 @@ namespace Tunes.Api.V1.Controllers
         [HttpGet]
         public async Task<IList<GeneroViewModel>> GetAll()
         {
-            return _mapper.Map<IList<GeneroViewModel>>(await _generoRepository.GetAll());
+            return _mapper.Map<IList<GeneroViewModel>>(await _generoRepository.ObterTodos());
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<GeneroViewModel>> GetById(int id)
         {
-            var genero = await _generoRepository.GetById(id);
+            var genero = await _generoRepository.ObterPorId(id);
 
             if (genero == null)
             {
@@ -80,7 +80,7 @@ namespace Tunes.Api.V1.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<GeneroViewModel>> Delete(int id)
         {
-            var generoViewModel = _mapper.Map<GeneroViewModel>(await _generoRepository.GetById(id));
+            var generoViewModel = _mapper.Map<GeneroViewModel>(await _generoRepository.ObterPorId(id));
 
             if (generoViewModel == null)
             {

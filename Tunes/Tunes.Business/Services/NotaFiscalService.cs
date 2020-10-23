@@ -21,7 +21,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new NotaFiscalValidation(), notaFiscal)) return false;
 
-            await _notaFiscalRepository.Add(notaFiscal);
+            await _notaFiscalRepository.Adicionar(notaFiscal);
 
             return true;
         }
@@ -30,14 +30,14 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new NotaFiscalValidation(), notaFiscal)) return false;
 
-            await _notaFiscalRepository.Update(notaFiscal);
+            await _notaFiscalRepository.Atualizar(notaFiscal);
 
             return true;
         }
 
         public async Task<bool> Remover(int id)
         {
-            await _notaFiscalRepository.Remove(id);
+            await _notaFiscalRepository.Remover(id);
 
             return true;
         }

@@ -21,7 +21,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new PlaylistValidation(), playlist)) return false;
 
-            await _playlistRepository.Add(playlist);
+            await _playlistRepository.Adicionar(playlist);
 
             return true;
         }
@@ -30,14 +30,14 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new PlaylistValidation(), playlist)) return false;
 
-            await _playlistRepository.Update(playlist);
+            await _playlistRepository.Atualizar(playlist);
 
             return true;
         }
 
         public async Task<bool> Remover(int id)
         {
-            await _playlistRepository.Remove(id);
+            await _playlistRepository.Remover(id);
 
             return true;
         }

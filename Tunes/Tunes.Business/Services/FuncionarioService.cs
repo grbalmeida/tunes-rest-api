@@ -23,7 +23,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new FuncionarioValidation(), funcionario)) return false;
 
-            await _funcionarioRepository.Add(funcionario);
+            await _funcionarioRepository.Adicionar(funcionario);
 
             return true;
         }
@@ -32,7 +32,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new FuncionarioValidation(), funcionario)) return false;
 
-            await _funcionarioRepository.Update(funcionario);
+            await _funcionarioRepository.Atualizar(funcionario);
 
             return true;
         }
@@ -53,7 +53,7 @@ namespace Tunes.Business.Services
                 return false;
             }
 
-            await _funcionarioRepository.Remove(id);
+            await _funcionarioRepository.Remover(id);
 
             return true;
         }

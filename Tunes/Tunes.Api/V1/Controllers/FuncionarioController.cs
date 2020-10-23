@@ -35,13 +35,13 @@ namespace Tunes.Api.V1.Controllers
         [HttpGet]
         public async Task<IList<FuncionarioViewModel>> GetAll()
         {
-            return _mapper.Map<IList<FuncionarioViewModel>>(await _funcionarioRepository.GetAll());
+            return _mapper.Map<IList<FuncionarioViewModel>>(await _funcionarioRepository.ObterTodos());
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<FuncionarioViewModel>> GetById(int id)
         {
-            var funcionario = await _funcionarioRepository.GetById(id);
+            var funcionario = await _funcionarioRepository.ObterPorId(id);
 
             if (funcionario == null)
             {
@@ -80,7 +80,7 @@ namespace Tunes.Api.V1.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<FuncionarioViewModel>> Delete(int id)
         {
-            var funcionarioViewModel = _mapper.Map<FuncionarioViewModel>(await _funcionarioRepository.GetById(id));
+            var funcionarioViewModel = _mapper.Map<FuncionarioViewModel>(await _funcionarioRepository.ObterPorId(id));
 
             if (funcionarioViewModel == null)
             {

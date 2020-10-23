@@ -22,7 +22,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new ArtistaValidation(), artista)) return false;
 
-            await _artistaRepository.Add(artista);
+            await _artistaRepository.Adicionar(artista);
 
             return true;
         }
@@ -31,7 +31,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new ArtistaValidation(), artista)) return false;
 
-            await _artistaRepository.Update(artista);
+            await _artistaRepository.Atualizar(artista);
 
             return true;
         }
@@ -44,7 +44,7 @@ namespace Tunes.Business.Services
                 return false;
             }
 
-            await _artistaRepository.Remove(id);
+            await _artistaRepository.Remover(id);
 
             return true;
         }

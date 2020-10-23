@@ -37,13 +37,13 @@ namespace Tunes.Api.V1.Controllers
         [HttpGet]
         public async Task<IList<TipoMidiaViewModel>> GetAll()
         {
-            return _mapper.Map<IList<TipoMidiaViewModel>>(await _tipoMidiaRepository.GetAll());
+            return _mapper.Map<IList<TipoMidiaViewModel>>(await _tipoMidiaRepository.ObterTodos());
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<TipoMidiaViewModel>> GetById(int id)
         {
-            var tipoMidia = await _tipoMidiaRepository.GetById(id);
+            var tipoMidia = await _tipoMidiaRepository.ObterPorId(id);
 
             if (tipoMidia == null)
             {
@@ -82,7 +82,7 @@ namespace Tunes.Api.V1.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<TipoMidiaViewModel>> Delete(int id)
         {
-            var tipoMidiaViewModel = _mapper.Map<TipoMidiaViewModel>(await _tipoMidiaRepository.GetById(id));
+            var tipoMidiaViewModel = _mapper.Map<TipoMidiaViewModel>(await _tipoMidiaRepository.ObterPorId(id));
 
             if (tipoMidiaViewModel == null)
             {

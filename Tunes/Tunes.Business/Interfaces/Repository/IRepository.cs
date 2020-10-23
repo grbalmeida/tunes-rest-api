@@ -8,12 +8,12 @@ namespace Tunes.Business.Interfaces.Repository
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity
     {
-        Task Add(TEntity entity);
-        Task<TEntity> GetById(int id);
-        Task<List<TEntity>> GetAll();
-        Task<IEnumerable<TEntity>> Search(Expression<Func<TEntity, bool>> predicate);
-        Task Update(TEntity entity);
-        Task Remove(int id);
-        Task<int> SaveChanges();
+        Task Adicionar(TEntity entity);
+        Task<TEntity> ObterPorId(int id);
+        Task<List<TEntity>> ObterTodos();
+        Task<IEnumerable<TEntity>> Busca(Expression<Func<TEntity, bool>> predicate);
+        Task Atualizar(TEntity entity);
+        Task Remover(int id);
+        Task<int> SalvarAlteracoes();
     }
 }

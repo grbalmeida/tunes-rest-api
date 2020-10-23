@@ -20,6 +20,9 @@ namespace Tunes.Business.Models.Validations
         
             RuleFor(nf => nf.CEP)
                 .MaximumLength(10).WithMessage("O campo {PropertyName} deve possuir no máximo {MaxLength} caracteres");
+
+            RuleFor(nf => nf.Total)
+                .GreaterThanOrEqualTo(0).WithMessage("O campo {PropertyName} deve ser igual ou maior que zero");
         }
     }
 }

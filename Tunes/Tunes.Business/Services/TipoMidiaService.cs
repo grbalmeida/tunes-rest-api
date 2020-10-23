@@ -21,7 +21,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new TipoMidiaValidation(), tipoMidia)) return false;
 
-            await _tipoMidiaRepository.Add(tipoMidia);
+            await _tipoMidiaRepository.Adicionar(tipoMidia);
 
             return true;
         }
@@ -30,14 +30,14 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new TipoMidiaValidation(), tipoMidia)) return false;
 
-            await _tipoMidiaRepository.Update(tipoMidia);
+            await _tipoMidiaRepository.Atualizar(tipoMidia);
 
             return true;
         }
 
         public async Task<bool> Remover(int id)
         {
-            await _tipoMidiaRepository.Remove(id);
+            await _tipoMidiaRepository.Remover(id);
 
             return true;
         }

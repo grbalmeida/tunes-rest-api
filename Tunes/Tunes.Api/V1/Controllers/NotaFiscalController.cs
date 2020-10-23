@@ -35,13 +35,13 @@ namespace Tunes.Api.V1.Controllers
         [HttpGet]
         public async Task<IList<NotaFiscalViewModel>> GetAll()
         {
-            return _mapper.Map<IList<NotaFiscalViewModel>>(await _notaFiscalRepository.GetAll());
+            return _mapper.Map<IList<NotaFiscalViewModel>>(await _notaFiscalRepository.ObterTodos());
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<NotaFiscalViewModel>> GetById(int id)
         {
-            var notaFiscal = await _notaFiscalRepository.GetById(id);
+            var notaFiscal = await _notaFiscalRepository.ObterPorId(id);
 
             if (notaFiscal == null)
             {
@@ -80,7 +80,7 @@ namespace Tunes.Api.V1.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<NotaFiscalViewModel>> Delete(int id)
         {
-            var notaFiscalViewModel = _mapper.Map<NotaFiscalViewModel>(await _notaFiscalRepository.GetById(id));
+            var notaFiscalViewModel = _mapper.Map<NotaFiscalViewModel>(await _notaFiscalRepository.ObterPorId(id));
 
             if (notaFiscalViewModel == null)
             {

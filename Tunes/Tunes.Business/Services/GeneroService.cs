@@ -22,7 +22,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new GeneroValidation(), genero)) return false;
 
-            await _generoRepository.Add(genero);
+            await _generoRepository.Adicionar(genero);
 
             return true;
         }
@@ -31,7 +31,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new GeneroValidation(), genero)) return false;
 
-            await _generoRepository.Update(genero);
+            await _generoRepository.Atualizar(genero);
 
             return true;
         }
@@ -44,7 +44,7 @@ namespace Tunes.Business.Services
                 return false;
             }
 
-            await _generoRepository.Remove(id);
+            await _generoRepository.Remover(id);
 
             return true;
         }

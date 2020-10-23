@@ -22,7 +22,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new AlbumValidation(), album)) return false;
 
-            await _albumRepository.Add(album);
+            await _albumRepository.Adicionar(album);
 
             return true;
         }
@@ -31,7 +31,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new AlbumValidation(), album)) return false;
 
-            await _albumRepository.Update(album);
+            await _albumRepository.Atualizar(album);
 
             return true;
         }
@@ -46,7 +46,7 @@ namespace Tunes.Business.Services
                 return false;
             }
 
-            await _albumRepository.Remove(id);
+            await _albumRepository.Remover(id);
 
             return true;
         }

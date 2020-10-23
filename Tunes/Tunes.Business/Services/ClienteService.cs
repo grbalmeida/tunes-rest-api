@@ -22,7 +22,7 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new ClienteValidation(), cliente)) return false;
 
-            await _clienteRepository.Add(cliente);
+            await _clienteRepository.Adicionar(cliente);
 
             return true;
         }
@@ -31,14 +31,14 @@ namespace Tunes.Business.Services
         {
             if (!ExecutarValidacao(new ClienteValidation(), cliente)) return false;
 
-            await _clienteRepository.Update(cliente);
+            await _clienteRepository.Atualizar(cliente);
 
             return true;
         }
 
         public async Task<bool> Remover(int id)
         {
-            await _clienteRepository.Remove(id);
+            await _clienteRepository.Remover(id);
 
             return true;
         }
