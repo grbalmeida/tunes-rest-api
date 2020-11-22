@@ -18,16 +18,25 @@ namespace Tunes.Api.V1.Controllers
     public class FaixaController : MainController
     {
         private readonly IFaixaRepository _faixaRepository;
+        private readonly IAlbumRepository _albumRepository;
+        private readonly ITipoMidiaRepository _tipoMidiaRepository;
+        private readonly IGeneroRepository _generoRepository;
         private readonly IFaixaService _faixaService;
         private readonly IMapper _mapper;
 
         public FaixaController(IFaixaRepository faixaRepository,
+                               IAlbumRepository albumRepository,
+                               ITipoMidiaRepository tipoMidiaRepository,
+                               IGeneroRepository generoRepository,
                                IFaixaService faixaService,
                                IMapper mapper,
                                INotifier notifier,
                                IUser user) : base(notifier, user)
         {
             _faixaRepository = faixaRepository;
+            _albumRepository = albumRepository;
+            _tipoMidiaRepository = tipoMidiaRepository;
+            _generoRepository = generoRepository;
             _faixaService = faixaService;
             _mapper = mapper;
         }
@@ -56,7 +65,18 @@ namespace Tunes.Api.V1.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _faixaService.Adicionar(_mapper.Map<Faixa>(faixaViewModel));
+            var faixa = _mapper.Map<Faixa>(faixaViewModel);
+
+            if (faixaViewModel.Album?.AlbumId > 0)
+                faixa.Album = await _albumRepository.ObterPorId(faixaViewModel.Album.AlbumId);
+
+            if (faixaViewModel.TipoMidia?.TipoMidiaId > 0)
+                faixa.TipoMidia = await _tipoMidiaRepository.ObterPorId(faixaViewModel.TipoMidia.TipoMidiaId);
+
+            if (faixaViewModel.Genero?.GeneroId > 0)
+                faixa.Genero = await _generoRepository.ObterPorId(faixaViewModel.Genero.GeneroId);
+
+            await _faixaService.Adicionar(faixa);
 
             return CustomResponse(faixaViewModel);
         }
@@ -72,7 +92,18 @@ namespace Tunes.Api.V1.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _faixaService.Atualizar(_mapper.Map<Faixa>(faixaViewModel));
+            var faixa = _mapper.Map<Faixa>(faixaViewModel);
+
+            if (faixaViewModel.Album?.AlbumId > 0)
+                faixa.Album = await _albumRepository.ObterPorId(faixaViewModel.Album.AlbumId);
+
+            if (faixaViewModel.TipoMidia?.TipoMidiaId > 0)
+                faixa.TipoMidia = await _tipoMidiaRepository.ObterPorId(faixaViewModel.TipoMidia.TipoMidiaId);
+
+            if (faixaViewModel.Genero?.GeneroId > 0)
+                faixa.Genero = await _generoRepository.ObterPorId(faixaViewModel.Genero.GeneroId);
+
+            await _faixaService.Atualizar(faixa);
 
             return CustomResponse(faixaViewModel);
         }
