@@ -18,16 +18,19 @@ namespace Tunes.Api.V1.Controllers
     public class AlbumController : MainController
     {
         private readonly IAlbumRepository _albumRepository;
+        private readonly IArtistaRepository _artistaRepository;
         private readonly IAlbumService _albumService;
         private readonly IMapper _mapper;
 
         public AlbumController(IAlbumRepository albumRepository,
+                               IArtistaRepository artistaRepository,
                                IAlbumService albumService,
                                IMapper mapper,
                                INotifier notifier,
                                IUser user) : base(notifier, user)
         {
             _albumRepository = albumRepository;
+            _artistaRepository = artistaRepository;
             _albumService = albumService;
             _mapper = mapper;
         }
@@ -56,7 +59,11 @@ namespace Tunes.Api.V1.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _albumService.Adicionar(_mapper.Map<Album>(albumViewModel));
+            var album = _mapper.Map<Album>(albumViewModel);
+
+            album.Artista = await _artistaRepository.ObterPorId(album.Artista.ArtistaId);
+
+            await _albumService.Adicionar(album);
 
             return CustomResponse(albumViewModel);
         }
@@ -72,7 +79,11 @@ namespace Tunes.Api.V1.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _albumService.Atualizar(_mapper.Map<Album>(albumViewModel));
+            var album = _mapper.Map<Album>(albumViewModel);
+
+            album.Artista = await _artistaRepository.ObterPorId(album.Artista.ArtistaId);
+
+            await _albumService.Atualizar(album);
 
             return CustomResponse(albumViewModel);
         }
