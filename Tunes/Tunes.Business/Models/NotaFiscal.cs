@@ -17,6 +17,8 @@ namespace Tunes.Business.Models
         {
             get
             {
+                if (ItensNotaFiscal == null) return 0;
+
                 return ItensNotaFiscal.Sum(i => i.PrecoUnitario * i.Quantidade);
             }
             set

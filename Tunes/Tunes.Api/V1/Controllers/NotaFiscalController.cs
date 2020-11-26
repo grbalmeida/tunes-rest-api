@@ -18,16 +18,22 @@ namespace Tunes.Api.V1.Controllers
     public class NotaFiscalController : MainController
     {
         private readonly INotaFiscalRepository _notaFiscalRepository;
+        private readonly IFaixaRepository _faixaRepository;
+        private readonly IClienteRepository _clienteRepository;
         private readonly INotaFiscalService _notaFiscalService;
         private readonly IMapper _mapper;
 
         public NotaFiscalController(INotaFiscalRepository notaFiscalRepository,
+                                    IFaixaRepository faixaRepository,
+                                    IClienteRepository clienteRepository,
                                     INotaFiscalService notaFiscalService,
                                     IMapper mapper,
                                     INotifier notifier,
                                     IUser user) : base(notifier, user)
         {
             _notaFiscalRepository = notaFiscalRepository;
+            _faixaRepository = faixaRepository;
+            _clienteRepository = clienteRepository;
             _notaFiscalService = notaFiscalService;
             _mapper = mapper;
         }
@@ -56,7 +62,16 @@ namespace Tunes.Api.V1.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _notaFiscalService.Adicionar(_mapper.Map<NotaFiscal>(notaFiscalViewModel));
+            var notaFiscal = _mapper.Map<NotaFiscal>(notaFiscalViewModel);
+
+            notaFiscal.Cliente = await _clienteRepository.ObterPorId(notaFiscalViewModel.Cliente.ClienteId);
+
+            foreach (var itemNotaFiscal in notaFiscal.ItensNotaFiscal)
+            {
+                itemNotaFiscal.Faixa = await _faixaRepository.ObterPorId(itemNotaFiscal.Faixa.FaixaId);
+            }
+
+            await _notaFiscalService.Adicionar(notaFiscal);
 
             return CustomResponse(notaFiscalViewModel);
         }
@@ -72,7 +87,16 @@ namespace Tunes.Api.V1.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _notaFiscalService.Atualizar(_mapper.Map<NotaFiscal>(notaFiscalViewModel));
+            var notaFiscal = _mapper.Map<NotaFiscal>(notaFiscalViewModel);
+
+            notaFiscal.Cliente = await _clienteRepository.ObterPorId(notaFiscalViewModel.Cliente.ClienteId);
+
+            foreach (var itemNotaFiscal in notaFiscal.ItensNotaFiscal)
+            {
+                itemNotaFiscal.Faixa = await _faixaRepository.ObterPorId(itemNotaFiscal.Faixa.FaixaId);
+            }
+
+            await _notaFiscalService.Atualizar(notaFiscal);
 
             return CustomResponse(notaFiscalViewModel);
         }
