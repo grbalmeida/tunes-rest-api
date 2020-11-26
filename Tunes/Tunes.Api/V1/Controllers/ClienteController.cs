@@ -18,16 +18,19 @@ namespace Tunes.Api.V1.Controllers
     public class ClienteController : MainController
     {
         private readonly IClienteRepository _clienteRepository;
+        private readonly IFuncionarioRepository _funcionarioRepository;
         private readonly IClienteService _clienteService;
         private readonly IMapper _mapper;
 
         public ClienteController(IClienteRepository clienteRepository,
+                                 IFuncionarioRepository funcionarioRepository,
                                  IClienteService clienteService,
                                  IMapper mapper,
                                  INotifier notifier,
                                  IUser user) : base(notifier, user)
         {
             _clienteRepository = clienteRepository;
+            _funcionarioRepository = funcionarioRepository;
             _clienteService = clienteService;
             _mapper = mapper;
         }
@@ -56,7 +59,14 @@ namespace Tunes.Api.V1.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _clienteService.Adicionar(_mapper.Map<Cliente>(clienteViewModel));
+            var cliente = _mapper.Map<Cliente>(clienteViewModel);
+
+            if (clienteViewModel.Suporte?.FuncionarioId > 0)
+            {
+                cliente.Suporte = await _funcionarioRepository.ObterPorId(clienteViewModel.Suporte.FuncionarioId);
+            }
+
+            await _clienteService.Adicionar(cliente);
 
             return CustomResponse(clienteViewModel);
         }
@@ -72,7 +82,14 @@ namespace Tunes.Api.V1.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _clienteService.Atualizar(_mapper.Map<Cliente>(clienteViewModel));
+            var cliente = _mapper.Map<Cliente>(clienteViewModel);
+
+            if (clienteViewModel.Suporte?.FuncionarioId > 0)
+            {
+                cliente.Suporte = await _funcionarioRepository.ObterPorId(clienteViewModel.Suporte.FuncionarioId);
+            }
+
+            await _clienteService.Atualizar(cliente);
 
             return CustomResponse(clienteViewModel);
         }
