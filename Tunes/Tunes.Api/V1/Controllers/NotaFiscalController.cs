@@ -18,12 +18,14 @@ namespace Tunes.Api.V1.Controllers
     public class NotaFiscalController : MainController
     {
         private readonly INotaFiscalRepository _notaFiscalRepository;
+        private readonly IItemNotaFiscalRepository _itemNotaFiscalRepository;
         private readonly IFaixaRepository _faixaRepository;
         private readonly IClienteRepository _clienteRepository;
         private readonly INotaFiscalService _notaFiscalService;
         private readonly IMapper _mapper;
 
         public NotaFiscalController(INotaFiscalRepository notaFiscalRepository,
+                                    IItemNotaFiscalRepository itemNotaFiscalRepository,
                                     IFaixaRepository faixaRepository,
                                     IClienteRepository clienteRepository,
                                     INotaFiscalService notaFiscalService,
@@ -32,6 +34,7 @@ namespace Tunes.Api.V1.Controllers
                                     IUser user) : base(notifier, user)
         {
             _notaFiscalRepository = notaFiscalRepository;
+            _itemNotaFiscalRepository = itemNotaFiscalRepository;
             _faixaRepository = faixaRepository;
             _clienteRepository = clienteRepository;
             _notaFiscalService = notaFiscalService;
@@ -73,7 +76,7 @@ namespace Tunes.Api.V1.Controllers
 
             await _notaFiscalService.Adicionar(notaFiscal);
 
-            return CustomResponse(notaFiscalViewModel);
+            return CustomResponse(_mapper.Map<NotaFiscalViewModel>(notaFiscal));
         }
 
         [HttpPut("{id:int}")]
@@ -91,14 +94,19 @@ namespace Tunes.Api.V1.Controllers
 
             notaFiscal.Cliente = await _clienteRepository.ObterPorId(notaFiscalViewModel.Cliente.ClienteId);
 
+            await _itemNotaFiscalRepository.RemoverPorNotaFiscalId(notaFiscal.NotaFiscalId);
+
             foreach (var itemNotaFiscal in notaFiscal.ItensNotaFiscal)
             {
-                itemNotaFiscal.Faixa = await _faixaRepository.ObterPorId(itemNotaFiscal.Faixa.FaixaId);
+                itemNotaFiscal.ItemNotaFiscalId = 0;
+
+                if (itemNotaFiscal.Faixa?.FaixaId > 0)
+                    itemNotaFiscal.Faixa = await _faixaRepository.ObterPorId(itemNotaFiscal.Faixa.FaixaId);
             }
 
             await _notaFiscalService.Atualizar(notaFiscal);
 
-            return CustomResponse(notaFiscalViewModel);
+            return CustomResponse(_mapper.Map<NotaFiscalViewModel>(notaFiscal));
         }
 
         [HttpDelete("{id:int}")]

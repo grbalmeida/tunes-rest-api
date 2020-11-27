@@ -28,6 +28,7 @@ namespace Tunes.Data.Repository
             return await DbSet.Where(nf => nf.NotaFiscalId == id)
                 .Include(nf => nf.Cliente)
                 .Include(nf => nf.ItensNotaFiscal)
+                .ThenInclude(inf => inf.Faixa)
                 .FirstOrDefaultAsync();
         }
 
