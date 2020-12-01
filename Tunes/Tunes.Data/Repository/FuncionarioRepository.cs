@@ -16,5 +16,13 @@ namespace Tunes.Data.Repository
                 .Include(f => f.ClientesAtendidos)
                 .FirstOrDefaultAsync(f => f.FuncionarioId == id);
         }
+
+        public async override Task<Funcionario> ObterPorId(int id)
+        {
+            return await DbSet.Include(f => f.Gerente)
+                .Include(f => f.Equipe)
+                .Include(f => f.ClientesAtendidos)
+                .FirstOrDefaultAsync(f => f.FuncionarioId == id);
+        }
     }
 }

@@ -56,7 +56,11 @@ namespace Tunes.Api.V1.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _funcionarioService.Adicionar(_mapper.Map<Funcionario>(funcionarioViewModel));
+            var funcionario = _mapper.Map<Funcionario>(funcionarioViewModel);
+
+            funcionario.Gerente = await _funcionarioRepository.ObterPorId(funcionario.Gerente.FuncionarioId);
+
+            await _funcionarioService.Adicionar(funcionario);
 
             return CustomResponse(funcionarioViewModel);
         }
@@ -72,7 +76,11 @@ namespace Tunes.Api.V1.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _funcionarioService.Atualizar(_mapper.Map<Funcionario>(funcionarioViewModel));
+            var funcionario = _mapper.Map<Funcionario>(funcionarioViewModel);
+
+            funcionario.Gerente = await _funcionarioRepository.ObterPorId(funcionario.Gerente.FuncionarioId);
+
+            await _funcionarioService.Atualizar(funcionario);
 
             return CustomResponse(funcionarioViewModel);
         }
