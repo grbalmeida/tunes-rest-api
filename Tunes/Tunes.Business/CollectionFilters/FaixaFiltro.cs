@@ -6,7 +6,6 @@
         public string Compositor { get; set; }
         public string Album { get; set; }
         public int TipoDeMidiaId { get; set; }
-        public int GeneroId { get; set;
-        }
+        public int GeneroId { get; set; }
     }
 }
