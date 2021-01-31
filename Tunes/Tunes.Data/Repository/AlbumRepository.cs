@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Tunes.Business.CollectionFilters;
 using Tunes.Business.Interfaces.Repository;
 using Tunes.Business.Models;
 using Tunes.Data.Context;
@@ -29,6 +32,22 @@ namespace Tunes.Data.Repository
         {
             return await DbSet.Include(a => a.Faixas)
                 .FirstOrDefaultAsync(a => a.AlbumId == id);
+        }
+
+        public async Task<IList<Album>> Filtro(AlbumFiltro filtro)
+        {
+            var albumQuery = Db.Albuns.AsNoTracking();
+
+            if (filtro != null)
+            {
+                if (!string.IsNullOrEmpty(filtro.Titulo))
+                    albumQuery = albumQuery.Where(a => a.Titulo.Contains(filtro.Titulo, StringComparison.InvariantCultureIgnoreCase));
+
+                if (!string.IsNullOrEmpty(filtro.Artista))
+                    albumQuery = albumQuery.Where(a => a.Artista.Nome.Contains(filtro.Artista, StringComparison.InvariantCultureIgnoreCase));
+            }
+
+            return await albumQuery.Include(a => a.Artista).ToListAsync();
         }
     }
 }
