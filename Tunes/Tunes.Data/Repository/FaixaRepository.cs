@@ -39,13 +39,13 @@ namespace Tunes.Data.Repository
             if (filtro != null)
             {
                 if (!string.IsNullOrEmpty(filtro.Nome))
-                    faixaQuery = faixaQuery.Where(f => f.Nome.Contains(filtro.Nome, StringComparison.InvariantCultureIgnoreCase));
+                    faixaQuery = faixaQuery.Where(f => f.Nome.Contains(filtro.Nome));
 
                 if (!string.IsNullOrEmpty(filtro.Compositor))
-                    faixaQuery = faixaQuery.Where(f => f.Compositor.Contains(filtro.Compositor, StringComparison.InvariantCultureIgnoreCase));
+                    faixaQuery = faixaQuery.Where(f => f.Compositor.Contains(filtro.Compositor));
 
                 if (!string.IsNullOrEmpty(filtro.Album))
-                    faixaQuery = faixaQuery.Where(f => f.Album.Titulo.Contains(filtro.Album, StringComparison.InvariantCultureIgnoreCase));
+                    faixaQuery = faixaQuery.Where(f => f.Album.Titulo.Contains(filtro.Album));
 
                 if (filtro.TipoDeMidiaId > 0)
                     faixaQuery = faixaQuery.Where(f => f.TipoMidia.TipoMidiaId == filtro.TipoDeMidiaId);

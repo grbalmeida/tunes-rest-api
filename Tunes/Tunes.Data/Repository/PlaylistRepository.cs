@@ -21,7 +21,7 @@ namespace Tunes.Data.Repository
             if (filtro != null)
             {
                 if (!string.IsNullOrEmpty(filtro.Nome))
-                    playlistQuery = playlistQuery.Where(p => p.Nome.Contains(filtro.Nome, StringComparison.InvariantCultureIgnoreCase));
+                    playlistQuery = playlistQuery.Where(p => p.Nome.Contains(filtro.Nome));
             }
 
             return await playlistQuery.ToListAsync();

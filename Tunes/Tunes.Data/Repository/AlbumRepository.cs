@@ -41,10 +41,10 @@ namespace Tunes.Data.Repository
             if (filtro != null)
             {
                 if (!string.IsNullOrEmpty(filtro.Titulo))
-                    albumQuery = albumQuery.Where(a => a.Titulo.Contains(filtro.Titulo, StringComparison.InvariantCultureIgnoreCase));
+                    albumQuery = albumQuery.Where(a => a.Titulo.Contains(filtro.Titulo));
 
                 if (!string.IsNullOrEmpty(filtro.Artista))
-                    albumQuery = albumQuery.Where(a => a.Artista.Nome.Contains(filtro.Artista, StringComparison.InvariantCultureIgnoreCase));
+                    albumQuery = albumQuery.Where(a => a.Artista.Nome.Contains(filtro.Artista));
             }
 
             return await albumQuery.Include(a => a.Artista).ToListAsync();

@@ -28,7 +28,7 @@ namespace Tunes.Data.Repository
             if (filtro != null)
             {
                 if (!string.IsNullOrEmpty(filtro.Nome))
-                    generoQuery = generoQuery.Where(g => g.Nome.Contains(filtro.Nome, StringComparison.InvariantCultureIgnoreCase));
+                    generoQuery = generoQuery.Where(g => g.Nome.Contains(filtro.Nome));
             }
 
             return await generoQuery.ToListAsync();
