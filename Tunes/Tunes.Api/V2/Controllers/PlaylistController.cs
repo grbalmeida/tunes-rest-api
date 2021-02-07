@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tunes.Api.Controllers;
+using Tunes.Api.Excel;
 using Tunes.Api.ViewModels;
 using Tunes.Business.CollectionFilters;
 using Tunes.Business.Interfaces;
@@ -32,6 +34,29 @@ namespace Tunes.Api.V2.Controllers
         public async Task<IList<PlaylistViewModel>> GetAll([FromQuery] PlaylistFiltro filtro)
         {
             return _mapper.Map<IList<PlaylistViewModel>>(await _playlistRepository.Filtro(filtro));
+        }
+
+        [HttpGet]
+        [Route("excel")]
+        public async Task<IActionResult> Excel([FromQuery] PlaylistFiltro filtro)
+        {
+            var playlists = await _playlistRepository.Filtro(filtro);
+
+            using (var wb = new XLWorkbook())
+            {
+                var ws = wb.AddWorksheet("Playlists");
+                var linhaAtual = 1;
+                ws.Cell(linhaAtual, (int)PlaylistColumns.Nome).Value = "Nome";
+                ws.Cell(linhaAtual, (int)PlaylistColumns.Nome).Style.Font.Bold = true;
+
+                foreach (var playlist in playlists)
+                {
+                    linhaAtual++;
+                    ws.Cell(linhaAtual, (int)PlaylistColumns.Nome).Value = playlist.Nome;
+                }
+
+                return await GerarArquivoExcel(wb, "playlists.xlsx");
+            }
         }
     }
 }
