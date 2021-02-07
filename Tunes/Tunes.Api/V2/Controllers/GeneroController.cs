@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tunes.Api.Controllers;
+using Tunes.Api.Excel;
 using Tunes.Api.ViewModels;
 using Tunes.Business.CollectionFilters;
 using Tunes.Business.Interfaces;
@@ -32,6 +34,29 @@ namespace Tunes.Api.V2.Controllers
         public async Task<IList<GeneroViewModel>> GetAll([FromQuery] GeneroFiltro filtro)
         {
             return _mapper.Map<IList<GeneroViewModel>>(await _generoRepository.Filtro(filtro));
+        }
+
+        [HttpGet]
+        [Route("excel")]
+        public async Task<IActionResult> Excel([FromQuery] GeneroFiltro filtro)
+        {
+            var generos = await _generoRepository.Filtro(filtro);
+
+            using (var wb = new XLWorkbook())
+            {
+                var ws = wb.AddWorksheet("Gêneros");
+                var linhaAtual = 1;
+                ws.Cell(linhaAtual, (int)GeneroColumns.Nome).Value = "Nome";
+                ws.Cell(linhaAtual, (int)GeneroColumns.Nome).Style.Font.Bold = true;
+
+                foreach (var genero in generos)
+                {
+                    linhaAtual++;
+                    ws.Cell(linhaAtual, (int)GeneroColumns.Nome).Value = genero.Nome;
+                }
+
+                return await GerarArquivoExcel(wb, "generos.xlsx");
+            }
         }
     }
 }
