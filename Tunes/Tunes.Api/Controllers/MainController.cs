@@ -4,6 +4,12 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Linq;
 using Tunes.Business.Notifications;
+using System.Net.Http;
+using System.IO;
+using ClosedXML.Excel;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Tunes.Api.Controllers
 {
@@ -73,6 +79,26 @@ namespace Tunes.Api.Controllers
         protected void NotifyError(string errorMessage)
         {
             _notifier.Handle(new Notification(errorMessage));
+        }
+
+        protected async Task<IActionResult> GerarArquivoExcel(XLWorkbook workbook, string nomeArquivo)
+        {
+            var ms = new MemoryStream();
+
+            workbook.SaveAs(ms);
+
+            ms.Seek(0, SeekOrigin.Begin);
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StreamContent(ms);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = nomeArquivo;
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+            response.Content.Headers.ContentLength = ms.Length;
+            ms.Seek(0, SeekOrigin.Begin);
+
+            return File(await response.Content.ReadAsByteArrayAsync(), response.Content.Headers.ContentType.ToString());
         }
     }
 }
