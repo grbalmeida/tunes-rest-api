@@ -16,7 +16,7 @@ namespace Tunes.Data.Repository
 
         public async Task<IList<Playlist>> Filtro(PlaylistFiltro filtro)
         {
-            var playlistQuery = Db.Playlists.AsNoTracking();
+            var playlistQuery = DbSet.AsNoTracking();
 
             if (filtro != null)
             {

@@ -15,7 +15,7 @@ namespace Tunes.Data.Repository
 
         public async Task<IList<TipoMidia>> Filtro(TipoMidiaFiltro filtro)
         {
-            var tipoMidiaQuery = Db.TiposDeMidia.AsNoTracking();
+            var tipoMidiaQuery = DbSet.AsNoTracking();
 
             if (filtro != null)
             {

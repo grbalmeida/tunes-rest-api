@@ -36,7 +36,7 @@ namespace Tunes.Data.Repository
 
         public async Task<IList<Album>> Filtro(AlbumFiltro filtro)
         {
-            var albumQuery = Db.Albuns.AsNoTracking();
+            var albumQuery = DbSet.AsNoTracking();
 
             if (filtro != null)
             {

@@ -34,7 +34,7 @@ namespace Tunes.Data.Repository
 
         public async Task<IList<Faixa>> Filtro(FaixaFiltro filtro)
         {
-            var faixaQuery = Db.Faixas.AsNoTracking();
+            var faixaQuery = DbSet.AsNoTracking();
 
             if (filtro != null)
             {

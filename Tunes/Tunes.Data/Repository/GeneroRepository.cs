@@ -16,14 +16,14 @@ namespace Tunes.Data.Repository
 
         public async Task<Genero> ObterGeneroFaixas(int id)
         {
-            return await Db.Generos.AsNoTracking()
+            return await DbSet.AsNoTracking()
                 .Include(g => g.Faixas)
                 .FirstOrDefaultAsync(g => g.GeneroId == id);
         }
 
         public async Task<IList<Genero>> Filtro(GeneroFiltro filtro)
         {
-            var generoQuery = Db.Generos.AsNoTracking();
+            var generoQuery = DbSet.AsNoTracking();
 
             if (filtro != null)
             {

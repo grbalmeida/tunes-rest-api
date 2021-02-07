@@ -16,14 +16,14 @@ namespace Tunes.Data.Repository
 
         public async Task<Artista> ObterArtistaAlbuns(int id)
         {
-            return await Db.Artistas.AsNoTracking()
+            return await DbSet.AsNoTracking()
                 .Include(a => a.Albuns)
                 .FirstOrDefaultAsync(a => a.ArtistaId == id);
         }
 
         public async Task<IList<Artista>> Filtro(ArtistaFiltro filtro)
         {
-            var artistaQuery = Db.Artistas.AsNoTracking();
+            var artistaQuery = DbSet.AsNoTracking();
 
             if (filtro != null)
             {
