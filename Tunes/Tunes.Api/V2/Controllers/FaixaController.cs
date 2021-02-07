@@ -76,7 +76,7 @@ namespace Tunes.Api.V2.Controllers
                     ws.Cell(linhaAtual, (int)FaixaColumns.PrecoUnitario).Value = faixa.PrecoUnitario;
                 }
 
-                return await GerarArquivoExcel(wb, "albuns.xlsx");
+                return await GerarArquivoExcel(wb, "faixas.xlsx");
             }
         }
     }

@@ -85,7 +85,9 @@ namespace Tunes.Data.Repository
                 }
             }
 
-            return await funcionarioQuery.ToListAsync();
+            return await funcionarioQuery
+                .Include(f => f.Gerente)
+                .ToListAsync();
         }
     }
 }
